@@ -10,7 +10,8 @@ class App extends Component {
   state = {
     listings: [],
     searchTerm: "",
-    category: null
+    category: null,
+    locations: []
   }
 
   componentDidMount() {
@@ -21,6 +22,14 @@ class App extends Component {
           listings
         })
       })
+  }
+
+  getLocations() {
+    let locations = []
+    this.state.listings.forEach(listing => {
+      locations.includes(listing.location) || locations.push(listing.location)
+    })
+    return locations
   }
 
   onSearch = (e) => {
@@ -50,7 +59,7 @@ class App extends Component {
         <Grid>
           <Grid.Row>
             <Grid.Column width={4}>
-              <Navbar categoriesClick={this.categoriesClick} />
+              <Navbar categoriesClick={this.categoriesClick} locations={this.getLocations()} />
             </Grid.Column>
             <Grid.Column width={12}>
               <SearchBar onSearch={this.onSearch} searchTerm={this.state.searchTerm} />

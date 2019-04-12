@@ -4,7 +4,7 @@ import NewListing from '../components/NewListing'
 
 export default class Navbar extends Component {
   state = {
-    modalOpen: false
+    modalOpen: true
   }
 
   handleItemClick = (e, { name }) => {
@@ -24,7 +24,7 @@ export default class Navbar extends Component {
     return (
       <React.Fragment>
 
-        <NewListing modal={this.state.modalOpen}  listingClick={this.listingClick}/>
+        <NewListing modal={this.state.modalOpen} listingClick={this.listingClick} locations={this.props.locations} />
 
         <Menu vertical>
           <Menu.Item style={{ backgroundColor: "#f99" }}>
