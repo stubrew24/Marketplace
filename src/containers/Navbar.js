@@ -7,9 +7,9 @@ export default class Navbar extends Component {
     modalOpen: false
   }
 
-  handleItemClick = (e, { name }) => {
-    this.setState({ activeItem: name },
-      () => this.props.categoriesClick(name))
+  handleItemClick = (id) => {
+    this.setState({ activeItem: id },
+      () => this.props.categoriesClick(id))
   }
 
   listingClick = () => {
@@ -18,13 +18,23 @@ export default class Navbar extends Component {
     })
   }
 
+  renderCategoryItems = () => {
+    return this.props.categories.map(category => {
+      const {name, id} = category
+
+      return <Menu.Item name={name} active={this.state.activeItem === id} onClick={() => this.handleItemClick(id)}>
+        <Icon name={name.toLowerCase()} />
+        {name}
+      </Menu.Item>
+  })}
+
   render() {
     const { activeItem } = this.state
 
     return (
       <React.Fragment>
 
-        <NewListing modal={this.state.modalOpen}  listingClick={this.listingClick}/>
+        {this.state.modalOpen && <NewListing modal={this.state.modalOpen}  listingClick={this.listingClick}/>}
 
         <Menu vertical>
           <Menu.Item style={{ backgroundColor: "#f99" }}>
@@ -34,22 +44,13 @@ export default class Navbar extends Component {
           <Menu.Item>Categories</Menu.Item>
           
           <Menu.Menu>
-            <Menu.Item name='' active={activeItem === ''} onClick={this.handleItemClick}>
+            <Menu.Item name='' active={activeItem === ''} onClick={() => this.handleItemClick(null)}>
                 <Icon name='grid layout' />
                 All Listings
             </Menu.Item>
-            <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick}>
-              <Icon name='home' />
-              Home
-            </Menu.Item>
-            <Menu.Item name='car' active={activeItem === 'car'} onClick={this.handleItemClick}>
-              <Icon name='car' />
-              Car
-            </Menu.Item>
-            <Menu.Item name='watch' active={activeItem === 'watch'} onClick={this.handleItemClick}>
-              <Icon name='clock' />
-              Watch
-            </Menu.Item>
+
+            {this.renderCategoryItems()}
+           
           </Menu.Menu>
           <Menu.Item color={'blue'} onClick={this.listingClick} >
             New Listing
@@ -59,3 +60,4 @@ export default class Navbar extends Component {
     )
   }
 }
+

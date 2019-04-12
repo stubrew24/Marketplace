@@ -4,21 +4,38 @@ import SearchBar from './components/SearchBar'
 import Navbar from './containers/Navbar'
 import { Grid, Container, Sidebar } from 'semantic-ui-react'
 import './App.css';
+import {URL, PRODUCTS_URL, CATEGORIES_URL, LOGIN_URL, SIGNUP_URL} from './constants.js'
 
 class App extends Component {
 
   state = {
     listings: [],
     searchTerm: "",
-    category: null
+    categoryId: null, 
+    categories: []
   }
 
   componentDidMount() {
-    fetch('http://localhost:3001/listings')
+    this.getListings()
+    this.getCategories()
+  }
+
+  getListings = () => {
+    fetch(PRODUCTS_URL)
       .then(resp => resp.json())
-      .then(listings => {
+      .then(products => {
         this.setState({
-          listings
+          listings: products
+        })
+      })
+  }
+
+  getCategories = () => {
+    fetch(CATEGORIES_URL)
+      .then(resp => resp.json())
+      .then(categories => {
+        this.setState({
+          categories
         })
       })
   }
@@ -29,7 +46,7 @@ class App extends Component {
     })
   }
 
-  categoriesClick = category => this.setState({ category })
+  categoriesClick = id => this.setState({ categoryId: id })
 
   listings = () => {
     if (this.state.searchTerm) {
@@ -37,8 +54,8 @@ class App extends Component {
         return listing.title.toLowerCase().includes(this.state.searchTerm) ||
           listing.description.toLowerCase().includes(this.state.searchTerm)
       })
-    } else if (this.state.category) {
-      return this.state.listings.filter(listing => listing.category.name.toLowerCase() === this.state.category)
+    } else if (this.state.categoryId) {
+      return this.state.listings.filter(listing => listing.category.id === this.state.categoryId)
     } else {
       return this.state.listings
     }
@@ -50,7 +67,7 @@ class App extends Component {
         <Grid>
           <Grid.Row>
             <Grid.Column width={4}>
-              <Navbar categoriesClick={this.categoriesClick} />
+              <Navbar categories={this.state.categories} categoriesClick={this.categoriesClick} />
             </Grid.Column>
             <Grid.Column width={12}>
               <SearchBar onSearch={this.onSearch} searchTerm={this.state.searchTerm} />
