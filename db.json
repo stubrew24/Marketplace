@@ -1,0 +1,95 @@
+{
+    "listings": [
+        {
+            "id": 1,
+            "title": "Iphone 6S",
+            "description": "In very good shape",
+            "image_urls": [
+                "https://scontent-lht6-1.xx.fbcdn.net/v/t1.0-9/56685719_979243708945603_6499173164034031616_n.jpg?_nc_cat=100&_nc_ht=scontent-lht6-1.xx&oh=01403f0a47afd7837f83ac8097ec742f&oe=5D348FA6",
+                "https://scontent-lht6-1.xx.fbcdn.net/v/t1.0-9/57099082_979241438945830_165016715141316608_n.jpg?_nc_cat=108&_nc_ht=scontent-lht6-1.xx&oh=93ef6d8157ac0d0f256ec517151ef687&oe=5D48AF9E"
+            ],
+            "location": "London",
+            "price": 120,
+            "category": {
+                "name": "Home",
+                "image_url": "https://png.pngtree.com/element_our/sm/20180413/sm_5ad0c06ab28e6.jpg"
+            },
+            "seller": {
+                "name": "Jakob",
+                "profile_img": "https://scontent-lht6-1.xx.fbcdn.net/v/t1.0-1/c0.14.160.160a/p160x160/21314382_1645765828788964_3443909986466353549_n.jpg?_nc_cat=107&_nc_ht=scontent-lht6-1.xx&oh=f917982c19d742397ca801bd7cbd804c&oe=5D4899C9"
+            }
+        },
+        {
+            "id": 2,
+            "title": "Volvo V70 car",
+            "description": "In an extremely good shape",
+            "image_urls": [
+                "https://upload.wikimedia.org/wikipedia/commons/8/82/1st-Volvo-V70.jpg"
+            ],
+            "location": "Gotenburg",
+            "price": 12000,
+            "category": {
+                "name": "Car",
+                "image_url": "https://png.pngtree.com/element_our/sm/20180413/sm_5ad0c06ab28e6.jpg"
+            },
+            "seller": {
+                "name": "Sander",
+                "profile_img": "https://scontent-lht6-1.xx.fbcdn.net/v/t1.0-1/c0.14.160.160a/p160x160/21314382_1645765828788964_3443909986466353549_n.jpg?_nc_cat=107&_nc_ht=scontent-lht6-1.xx&oh=f917982c19d742397ca801bd7cbd804c&oe=5D4899C9"
+            }
+        },
+        {
+            "id": 3,
+            "title": "Volvo V70 car",
+            "description": "In an extremely good shape",
+            "image_urls": [
+                "https://upload.wikimedia.org/wikipedia/commons/8/82/1st-Volvo-V70.jpg"
+            ],
+            "location": "Gotenburg",
+            "price": 12000,
+            "category": {
+                "name": "Car",
+                "image_url": "https://png.pngtree.com/element_our/sm/20180413/sm_5ad0c06ab28e6.jpg"
+            },
+            "seller": {
+                "name": "Sander",
+                "profile_img": "https://scontent-lht6-1.xx.fbcdn.net/v/t1.0-1/c0.14.160.160a/p160x160/21314382_1645765828788964_3443909986466353549_n.jpg?_nc_cat=107&_nc_ht=scontent-lht6-1.xx&oh=f917982c19d742397ca801bd7cbd804c&oe=5D4899C9"
+            }
+        },
+        {
+            "id": 4,
+            "title": "Swatch Watch",
+            "description": "In an cool shape",
+            "image_urls": [
+                "https://scontent-lht6-1.xx.fbcdn.net/v/t1.0-9/56659840_10211892547423669_8434285939265634304_n.jpg?_nc_cat=106&_nc_ht=scontent-lht6-1.xx&oh=6a068def2cae535d4e0667342acde65a&oe=5D4D63BB"
+            ],
+            "location": "New York",
+            "price": 500,
+            "category": {
+                "name": "Watch",
+                "image_url": "https://png.pngtree.com/element_our/sm/20180413/sm_5ad0c06ab28e6.jpg"
+            },
+            "seller": {
+                "name": "Julia",
+                "profile_img": "https://scontent-lht6-1.xx.fbcdn.net/v/t1.0-1/c0.14.160.160a/p160x160/21314382_1645765828788964_3443909986466353549_n.jpg?_nc_cat=107&_nc_ht=scontent-lht6-1.xx&oh=f917982c19d742397ca801bd7cbd804c&oe=5D4899C9"
+            }
+        },
+        {
+            "id": 5,
+            "title": "Swatch Watch",
+            "description": "In an cool shape",
+            "image_urls": [
+                "https://scontent-lht6-1.xx.fbcdn.net/v/t1.0-9/56659840_10211892547423669_8434285939265634304_n.jpg?_nc_cat=106&_nc_ht=scontent-lht6-1.xx&oh=6a068def2cae535d4e0667342acde65a&oe=5D4D63BB"
+            ],
+            "location": "New York",
+            "price": 500,
+            "category": {
+                "name": "Watch",
+                "image_url": "https://png.pngtree.com/element_our/sm/20180413/sm_5ad0c06ab28e6.jpg"
+            },
+            "seller": {
+                "name": "Julia",
+                "profile_img": "https://scontent-lht6-1.xx.fbcdn.net/v/t1.0-1/c0.14.160.160a/p160x160/21314382_1645765828788964_3443909986466353549_n.jpg?_nc_cat=107&_nc_ht=scontent-lht6-1.xx&oh=f917982c19d742397ca801bd7cbd804c&oe=5D4899C9"
+            }
+        }
+    ]
+}
