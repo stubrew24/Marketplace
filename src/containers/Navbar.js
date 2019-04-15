@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 import { Dropdown, Icon, Input, Menu, Header, Button } from 'semantic-ui-react'
 import NewListing from '../components/NewListing'
+import Login from '../components/Login'
+import SignUp from '../components/SignUp'
 
 export default class Navbar extends Component {
   state = {
-    modalOpen: false
+    modalOpen: false,
+    loginOpen: false,
+    signUpOpen: false
   }
 
   handleItemClick = (id) => {
@@ -15,6 +19,18 @@ export default class Navbar extends Component {
   listingClick = () => {
     this.setState({
       modalOpen: !this.state.modalOpen
+    })
+  }
+
+  loginClick = () => {
+    this.setState({
+      loginOpen: !this.state.loginOpen
+    })
+  }
+
+  signUpClick = () => {
+    this.setState({
+      signUpOpen: !this.state.signUpOpen
     })
   }
 
@@ -35,6 +51,8 @@ export default class Navbar extends Component {
     })
   }
 
+  
+
   render() {
     const { activeItem } = this.state
 
@@ -42,6 +60,8 @@ export default class Navbar extends Component {
       <React.Fragment>
 
         {this.state.modalOpen && <NewListing modal={this.state.modalOpen} locations={this.props.locations} listingClick={this.listingClick} categories={this.props.categories} saveListing={this.props.saveListing} />}
+        {this.state.loginOpen && <Login modal={this.state.loginOpen} handleLogin={this.props.handleLogin} loginClick={this.loginClick} ></Login>}
+        {this.state.signUpOpen && <SignUp modal={this.state.signUpOpen} handleSignUp={this.props.handleSignUp} signUpClick={this.signUpClick}></SignUp>}
 
 
         <Menu vertical>
@@ -78,6 +98,14 @@ export default class Navbar extends Component {
 
           <Menu.Item>
             <Button positive fluid onClick={this.listingClick} >New Listing</Button>
+          </Menu.Item>
+
+          <Menu.Item>
+            <Button positive fluid onClick={this.loginClick}>Login</Button>
+          </Menu.Item>
+
+          <Menu.Item>
+            <Button positive fluid onClick={this.signUpClick}>Sign Up</Button>
           </Menu.Item>
 
         </Menu>

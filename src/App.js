@@ -84,13 +84,22 @@ class App extends Component {
     }).then(resp => resp.json()).then(this.getListings)
   }
 
+  handleLogin = (user) => {
+    console.log("TODO: handle login")
+  }
+
+  handleSignUp = (user) => {
+    debugger
+    console.log("TODO: handle signup")
+  }
+
   render() {
     return (
       <Container className="container-box">
         <Grid>
           <Grid.Row>
             <Grid.Column width={4}>
-            <Navbar categories={this.state.categories} locations={this.getLocations()} categoriesClick={this.setCategory} saveListing={this.saveListing} setLocation={this.setLocation}/>
+            <Navbar handleLogin={this.handleLogin} handleSignUp={this.handleSignUp} categories={this.state.categories} locations={this.getLocations()} categoriesClick={this.setCategory} saveListing={this.saveListing} setLocation={this.setLocation}/>
             </Grid.Column>
             <Grid.Column width={12}>
               <SearchBar onSearch={this.onSearch} searchTerm={this.state.searchTerm} />
