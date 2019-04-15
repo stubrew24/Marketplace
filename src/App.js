@@ -87,10 +87,19 @@ class App extends Component {
     }).then(resp => resp.json()).then(this.getListings)
   }
 
+
   listingClick = () => {
     this.setState({
       modalOpen: !this.state.modalOpen
     })
+  }
+  handleLogin = (user) => {
+    console.log("TODO: handle login")
+  }
+
+  handleSignUp = (user) => {
+    debugger
+    console.log("TODO: handle signup")
   }
 
   render() {
@@ -100,7 +109,9 @@ class App extends Component {
         <Grid>
           <Grid.Row>
             <Grid.Column width={4}>
-            <Navbar categories={this.state.categories} locations={this.getLocations()} categoriesClick={this.setCategory} setLocation={this.setLocation} listingClick={this.listingClick}/>
+
+            <Navbar handleLogin={this.handleLogin} handleSignUp={this.handleSignUp} categories={this.state.categories} locations={this.getLocations()} categoriesClick={this.setCategory} listingClick={this.listingClick} saveListing={this.saveListing} setLocation={this.setLocation}/>
+
             </Grid.Column>
             <Grid.Column width={12}>
               <SearchBar onSearch={this.onSearch} searchTerm={this.state.searchTerm} />
