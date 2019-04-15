@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Chelsea+Market');
+
 body {
   margin: 0;
   padding: 0;
@@ -25,3 +27,10 @@ code {
 .container-box{
   margin-top: 1.5em;
 }
+
+.headerText{
+  font-family: 'Chelsea Market', sans-serif!important;
+  text-align: center;
+}
+
+@primaryColor: blue;

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { Dropdown, Icon, Input, Menu, Header } from 'semantic-ui-react'
+import { Dropdown, Icon, Input, Menu, Header, Button } from 'semantic-ui-react'
 import NewListing from '../components/NewListing'
 
 export default class Navbar extends Component {
   state = {
-    modalOpen: true
+    modalOpen: false
   }
 
   handleItemClick = (id) => {
@@ -20,13 +20,20 @@ export default class Navbar extends Component {
 
   renderCategoryItems = () => {
     return this.props.categories.map(category => {
-      const {name, id} = category
+      const { name, id, icon } = category
 
       return <Menu.Item name={name} active={this.state.activeItem === id} onClick={() => this.handleItemClick(id)}>
-        <Icon name={name.toLowerCase()} />
+        <Icon name={icon} />
         {name}
       </Menu.Item>
-  })}
+    })
+  }
+
+  locations = () => {
+    return this.props.locations.map(location => {
+      return { key: location, value: location, text: location }
+    })
+  }
 
   render() {
     const { activeItem } = this.state
@@ -34,28 +41,45 @@ export default class Navbar extends Component {
     return (
       <React.Fragment>
 
-        {this.state.modalOpen && <NewListing modal={this.state.modalOpen}  locations={this.props.locations} listingClick={this.listingClick}/>}
+        {this.state.modalOpen && <NewListing modal={this.state.modalOpen} locations={this.props.locations} listingClick={this.listingClick} categories={this.props.categories} saveListing={this.props.saveListing} />}
 
 
         <Menu vertical>
-          <Menu.Item style={{ backgroundColor: "#f99" }}>
-            <Header>The Marketplace</Header>
+
+          <Menu.Item>
+            <Header className="headerText">The Marketplace</Header>
           </Menu.Item>
 
-          <Menu.Item>Categories</Menu.Item>
+
+          <Menu.Item>
+            <Dropdown
+              name={"location"}
+              onChange={this.props.setLocation}
+              value={this.state.category_id}
+              placeholder='Select Location'
+              fluid
+              search
+              selection
+              options={this.locations()}
+            />
+          </Menu.Item>
           
+          <Menu.Item>Categories</Menu.Item>
+
           <Menu.Menu>
             <Menu.Item name='' active={activeItem === ''} onClick={() => this.handleItemClick(null)}>
-                <Icon name='grid layout' />
-                All Listings
+              <Icon name='grid layout' />
+              All Listings
             </Menu.Item>
 
             {this.renderCategoryItems()}
-           
+
           </Menu.Menu>
-          <Menu.Item color={'blue'} onClick={this.listingClick} >
-            New Listing
+
+          <Menu.Item>
+            <Button positive fluid onClick={this.listingClick} >New Listing</Button>
           </Menu.Item>
+
         </Menu>
       </React.Fragment>
     )

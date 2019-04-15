@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Content from './containers/Content'
 import SearchBar from './components/SearchBar'
 import Navbar from './containers/Navbar'
-import { Grid, Container, Sidebar } from 'semantic-ui-react'
+import { Grid, Container } from 'semantic-ui-react'
 import './App.css';
 import {URL, PRODUCTS_URL, CATEGORIES_URL, LOGIN_URL, SIGNUP_URL} from './constants.js'
 
@@ -49,13 +49,17 @@ class App extends Component {
     return locations
   }
 
-  onSearch = (e) => {
-    this.setState({
-      searchTerm: e.target.value.toLowerCase()
-    })
-  }
+  onSearch = e => this.setState({ searchTerm: e.target.value.toLowerCase() })
 
-  categoriesClick = id => this.setState({ categoryId: id })
+  setLocation = (e, {value}) => this.setState({ location: value, categoryId: null })
+
+  setCategory = id => this.setState({ categoryId: id, location: null })
+
+  removeListing = id => {
+    fetch(PRODUCTS_URL + `/${id}`, {
+      method: 'DELETE'
+    }).then(this.getListings)
+  }
 
   listings = () => {
     if (this.state.searchTerm) {
@@ -65,9 +69,19 @@ class App extends Component {
       })
     } else if (this.state.categoryId) {
       return this.state.listings.filter(listing => listing.category.id === this.state.categoryId)
+    } else if (this.state.location) {
+      return this.state.listings.filter(listing => listing.location === this.state.location)
     } else {
       return this.state.listings
     }
+  }
+
+  saveListing = (listing) => {
+    fetch(PRODUCTS_URL, {
+      method: 'POST',
+      headers: {'Content-type':'application/json'},   
+      body: JSON.stringify(listing)
+    }).then(resp => resp.json()).then(this.getListings)
   }
 
   render() {
@@ -76,11 +90,11 @@ class App extends Component {
         <Grid>
           <Grid.Row>
             <Grid.Column width={4}>
-            <Navbar categories={this.state.categories} locations={this.getLocations()} categoriesClick={this.categoriesClick} />
+            <Navbar categories={this.state.categories} locations={this.getLocations()} categoriesClick={this.setCategory} saveListing={this.saveListing} setLocation={this.setLocation}/>
             </Grid.Column>
             <Grid.Column width={12}>
               <SearchBar onSearch={this.onSearch} searchTerm={this.state.searchTerm} />
-              <Content listings={this.listings()} />
+              <Content listings={this.listings()} removeListing={this.removeListing}/>
             </Grid.Column>
           </Grid.Row>
         </Grid>

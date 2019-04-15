@@ -1,49 +1,110 @@
 import React from 'react'
-import { Input, Modal, TextArea, Button, Form, Label } from 'semantic-ui-react'
+import { Input, Modal, TextArea, Button, Form, Label, Dropdown, Grid, Message, Confirm} from 'semantic-ui-react'
 
-const locationDatalist = (locations) => {
-    return locations.map(location => {
-        return <option value={location} />
-    })
+
+export default class NewListing extends React.Component {
+
+    state = {
+        title: "",
+        description: "",
+        location: "",
+        price: 0,
+        category_id: "",
+        user_id: 1,
+        img_urls: ['https://www.winbirri.com/wp-content/uploads/2017/11/product-image-placeholder.jpg'],
+        error: "",
+        open: false
+    }
+
+    categories = () => {
+        return this.props.categories.map(category => {
+            return { key: category.id, value: category.id, text: category.name }
+        })
+    }
+
+    locationDatalist = () => {
+        return this.props.locations.map(location => {
+            return <option value={location} />
+        })
+    }
+
+    handleFormInput = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+    handleSelect = (e, {value}) => {
+        this.setState({
+            category_id: value
+        })
+    }
+
+    handleSubmit = () => {
+        const {title, description, location, price, category_id} = this.state
+        if (title && description && location && price && category_id){
+            this.props.listingClick()
+            this.props.saveListing(this.state) 
+        } else {
+            this.setState({
+                error: "Make sure all fields are complete."
+            })
+        }
+    }
+
+    render() {
+        return (
+            <Modal open={this.props.modal} 
+                    closeOnEscape={this.props.listingClick}
+                    closeOnDimmerClick={this.props.listingClick}
+                    onClose={this.props.listingClick} closeIcon>
+                    
+                <Modal.Header>
+                    New Listing
+                </Modal.Header>
+
+                <Modal.Content>
+                    {this.state.error ? <Message error>{this.state.error}</Message> : null}
+                    
+                    <Form onChange={this.handleFormInput} onSubmit={this.handleSubmit} >
+                        <Input placeholder={"Title"} fluid style={{ fontSize: "1.5em" }} name={"title"} value={this.state.title} /><br />
+                        <TextArea placeholder={"Description"} fluid name={"description"} value={this.state.description} /><br /><br />
+
+                        <Input list='locations' placeholder='Location' fluid name={"location"} value={this.state.location} />
+                        <datalist id='locations'>
+                            {this.locationDatalist()}
+                        </datalist><br />
+                        <Grid>
+                            <Grid.Row>
+                                <Grid.Column width={8}>
+                                    <Input labelPosition='right' type='text' placeholder='Amount' fluid name={"price"} value={this.state.price}>
+                                        <Label basic>£</Label>
+                                        <input type="number" />
+                                        <Label>.00</Label>
+                                    </Input><br /><br />
+                                </Grid.Column>
+
+                                <Grid.Column width={8}>
+                                    <Dropdown
+                                        name={"category_id"}  
+                                        onChange={this.handleSelect}
+                                        value={this.state.category_id}
+                                        placeholder='Select Category'
+                                        fluid
+                                        search
+                                        selection
+                                        options={this.categories()}
+                                    />
+                                </Grid.Column>
+                            </Grid.Row>
+
+                        </Grid>
+                    </Form>
+                </Modal.Content>
+
+                <Modal.Actions>
+                    <Button onClick={this.handleSubmit} positive>Save Listing</Button>
+                </Modal.Actions>
+            </Modal>)
+    }
 }
-
-const NewListing = (props) => (
-    <Modal open={props.modal} >
-        <Modal.Header>
-            New Listing
-        </Modal.Header>
-
-        <Modal.Content>
-            <Form>
-                <Input placeholder={"Title"} fluid style={{fontSize: "1.5em"}} /><br />
-                <TextArea placeholder={"Description"} fluid /><br /><br />
-                
-                <Input list='locations' placeholder='Location' fluid />
-                <datalist id='locations'>
-                    {locationDatalist(props.locations)}
-                </datalist><br />
-
-                <Input labelPosition='right' type='text' placeholder='Amount'>
-                    <Label basic>£</Label>
-                    <input type="number"/>
-                    <Label>.00</Label>
-                </Input>
-
-            </Form>
-        </Modal.Content>
-
-        <Modal.Actions>
-            <Button onClick={props.listingClick}>Cancel</Button>
-        </Modal.Actions>
-    </Modal>
-)
-
-export default NewListing
-
-// "title" text
-// "description" textarea
-// "price": number
-// "location": autocomplete
-// "img_urls": image upload
-// "user_id": hidden
-// "category_id": dropdown
