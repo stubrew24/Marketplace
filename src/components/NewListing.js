@@ -16,6 +16,23 @@ export default class NewListing extends React.Component {
         open: false
     }
 
+    componentDidMount(){
+        if (this.props.listing){
+            this.updateForm(this.props.listing)
+        }
+    }
+
+    updateForm = (listing) => {
+        this.setState({
+            title: listing.title,
+            description: listing.description,
+            location: listing.location,
+            price: listing.price,
+            category_id: listing.category_id,
+            open: true
+        })
+    }
+
     categories = () => {
         return this.props.categories.map(category => {
             return { key: category.id, value: category.id, text: category.name }
@@ -57,7 +74,7 @@ export default class NewListing extends React.Component {
             <Modal open={this.props.modal} 
                     closeOnEscape={this.props.listingClick}
                     closeOnDimmerClick={this.props.listingClick}
-                    onClose={this.props.listingClick} closeIcon>
+                    onClose={this.props.listingClick} >
                     
                 <Modal.Header>
                     New Listing
@@ -103,6 +120,7 @@ export default class NewListing extends React.Component {
                 </Modal.Content>
 
                 <Modal.Actions>
+                    <Button onClick={this.props.listingClick}>Close</Button>
                     <Button onClick={this.handleSubmit} positive>Save Listing</Button>
                 </Modal.Actions>
             </Modal>)

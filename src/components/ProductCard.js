@@ -51,14 +51,18 @@ export default class ProductCard extends React.Component {
                         <Image floated="left" avatar src={this.props.seller.profile_img_url} />
                     </Modal.Description>
                 </Modal.Content>
-
+                
                 <Modal.Actions>
+                    <Button>Update</Button>
                     <Modal
                         trigger={<Button>Delete</Button>}
                         header='Careful now'
                         content='Are you sure you want to delete this listing?'
                         actions={['Cancel', { key: 'delete', content: 'Delete', negative: true, onClick: this.handleDelete}]}
                     />
+                </Modal.Actions>
+
+                <Modal.Actions>
                     <Popup trigger={<Button positive>Request Details</Button>} content='This will automagically send a message to the seller.' />
                 </Modal.Actions>
             </Modal>

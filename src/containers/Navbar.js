@@ -1,21 +1,15 @@
 import React, { Component } from 'react'
 import { Dropdown, Icon, Input, Menu, Header, Button } from 'semantic-ui-react'
-import NewListing from '../components/NewListing'
 
 export default class Navbar extends Component {
+
   state = {
-    modalOpen: false
+    activeItem: null
   }
 
   handleItemClick = (id) => {
     this.setState({ activeItem: id },
       () => this.props.categoriesClick(id))
-  }
-
-  listingClick = () => {
-    this.setState({
-      modalOpen: !this.state.modalOpen
-    })
   }
 
   renderCategoryItems = () => {
@@ -40,9 +34,6 @@ export default class Navbar extends Component {
 
     return (
       <React.Fragment>
-
-        {this.state.modalOpen && <NewListing modal={this.state.modalOpen} locations={this.props.locations} listingClick={this.listingClick} categories={this.props.categories} saveListing={this.props.saveListing} />}
-
 
         <Menu vertical>
 
@@ -77,7 +68,7 @@ export default class Navbar extends Component {
           </Menu.Menu>
 
           <Menu.Item>
-            <Button positive fluid onClick={this.listingClick} >New Listing</Button>
+            <Button positive fluid onClick={this.props.listingClick} >New Listing</Button>
           </Menu.Item>
 
         </Menu>

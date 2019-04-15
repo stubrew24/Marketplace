@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Content from './containers/Content'
 import SearchBar from './components/SearchBar'
 import Navbar from './containers/Navbar'
+import NewListing from './components/NewListing'
 import { Grid, Container } from 'semantic-ui-react'
 import './App.css';
 import {URL, PRODUCTS_URL, CATEGORIES_URL, LOGIN_URL, SIGNUP_URL} from './constants.js'
@@ -13,7 +14,9 @@ class App extends Component {
     searchTerm: "",
     locations: [],
     categoryId: null, 
-    categories: []
+    categories: [],
+    modalOpen: false,
+    currentUser: 1
   }
 
   componentDidMount() {
@@ -84,13 +87,20 @@ class App extends Component {
     }).then(resp => resp.json()).then(this.getListings)
   }
 
+  listingClick = () => {
+    this.setState({
+      modalOpen: !this.state.modalOpen
+    })
+  }
+
   render() {
     return (
       <Container className="container-box">
+        {this.state.modalOpen && <NewListing modal={this.state.modalOpen} locations={this.getLocations()} listingClick={this.listingClick} categories={this.state.categories} saveListing={this.saveListing} />}
         <Grid>
           <Grid.Row>
             <Grid.Column width={4}>
-            <Navbar categories={this.state.categories} locations={this.getLocations()} categoriesClick={this.setCategory} saveListing={this.saveListing} setLocation={this.setLocation}/>
+            <Navbar categories={this.state.categories} locations={this.getLocations()} categoriesClick={this.setCategory} setLocation={this.setLocation} listingClick={this.listingClick}/>
             </Grid.Column>
             <Grid.Column width={12}>
               <SearchBar onSearch={this.onSearch} searchTerm={this.state.searchTerm} />
