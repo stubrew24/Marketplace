@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Dropdown, Icon, Input, Menu, Header, Button } from 'semantic-ui-react'
+import { Card, Grid, Dropdown, Icon, Image, Menu, Header, Button } from 'semantic-ui-react'
 
 import NewListing from '../components/NewListing'
 import Login from '../components/Login'
@@ -54,7 +54,7 @@ export default class Navbar extends Component {
     })
   }
 
-  
+
 
   render() {
     const { activeItem } = this.state
@@ -67,12 +67,10 @@ export default class Navbar extends Component {
         {this.state.loginOpen && <Login modal={this.state.loginOpen} handleLogin={this.props.handleLogin} loginClick={this.loginClick} ></Login>}
         {this.state.signUpOpen && <SignUp modal={this.state.signUpOpen} handleSignUp={this.props.handleSignUp} signUpClick={this.signUpClick}></SignUp>}
 
-        <Menu vertical>
-
+        <Menu vertical fluid>
           <Menu.Item>
             <Header className="headerText">The Marketplace</Header>
           </Menu.Item>
-
 
           <Menu.Item>
             <Dropdown
@@ -86,7 +84,7 @@ export default class Navbar extends Component {
               options={this.locations()}
             />
           </Menu.Item>
-          
+
           <Menu.Item>Categories</Menu.Item>
 
           <Menu.Menu>
@@ -99,19 +97,48 @@ export default class Navbar extends Component {
 
           </Menu.Menu>
 
-          <Menu.Item>
-            <Button positive fluid onClick={this.props.listingClick} >New Listing</Button>
-          </Menu.Item>
-
-          <Menu.Item>
-            <Button positive fluid onClick={this.loginClick}>Login</Button>
-          </Menu.Item>
-
-          <Menu.Item>
-            <Button positive fluid onClick={this.signUpClick}>Sign Up</Button>
-          </Menu.Item>
+          {this.props.currentUser &&
+            <Menu.Item>
+              <Button positive fluid onClick={this.props.listingClick} >New Listing</Button>
+            </Menu.Item>
+          }
 
         </Menu>
+        {console.log(this.props.currentUser)}
+        {this.props.currentUser != null
+            ?
+            <Card>
+              <Card.Content>
+                <Image floated='right' size='mini' src={this.props.currentUser.profile_img_url} />
+                <Card.Header>{this.props.currentUser.name}</Card.Header>
+                <Card.Description>
+                  Steve wants to add you to the group <strong>best friends</strong>
+                </Card.Description>
+              </Card.Content>
+              
+              <Card.Content extra>
+                  <Button  positive fluid onClick={this.props.handleLogout}>
+                    Log Out
+                  </Button>
+              </Card.Content>
+            </Card>
+            :
+            <Card>
+              <Card.Content>
+                <Grid>
+                  <Grid.Row>
+                    <Grid.Column width={8} style={{ paddingRight: 6 }}>
+                      <Button positive fluid onClick={this.loginClick}>Login</Button>
+                    </Grid.Column>
+                    <Grid.Column width={8} style={{ paddingLeft: 6 }}>
+                      <Button positive fluid onClick={this.signUpClick}>Signup</Button>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </Card.Content>
+            </Card>
+            
+          }
       </React.Fragment>
     )
   }

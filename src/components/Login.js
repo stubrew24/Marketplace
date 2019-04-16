@@ -4,7 +4,7 @@ import { Button, Message, Modal, Form, Label, Input } from 'semantic-ui-react'
 class Login extends React.Component {
 
     state = {
-        username: "",
+        email: "",
         password: "", 
         error: ""
     }
@@ -22,7 +22,7 @@ class Login extends React.Component {
     }
 
     handleSubmit = (_) => {
-        if (this.state.username && this.state.password) {
+        if (this.state.email && this.state.password) {
             this.props.loginClick()
             this.props.handleLogin(this.state)
             
@@ -48,8 +48,8 @@ class Login extends React.Component {
 
                     <Form onChange={this.handleFormChange} onSubmit={this.handleSubmit}>
                         <Form.Field>
-                            <Label>Username</Label>
-                            <Input name="username" value={this.state.username}></Input>
+                            <Label>Email</Label>
+                            <Input name="email" value={this.state.email}></Input>
                         </Form.Field>
                         <Form.Field>
                             <Label>Password</Label>
@@ -58,6 +58,9 @@ class Login extends React.Component {
                         <Button type="submit">Login</Button>
                     </Form>
                 </Modal.Content>
+                <Modal.Actions>
+                    New here? <a href="#">Create an account</a>.
+                </Modal.Actions>
             </Modal>
             
         )

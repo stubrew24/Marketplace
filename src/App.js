@@ -5,7 +5,7 @@ import Navbar from './containers/Navbar'
 import NewListing from './components/NewListing'
 import { Grid, Container } from 'semantic-ui-react'
 import './App.css';
-import {URL, PRODUCTS_URL, CATEGORIES_URL, LOGIN_URL, SIGNUP_URL} from './constants.js'
+import {URL, PRODUCTS_URL, CATEGORIES_URL, LOGIN_URL, SIGNUP_URL, AUTOLOGIN_URL} from './constants.js'
 
 class App extends Component {
 
@@ -16,12 +16,28 @@ class App extends Component {
     categoryId: null, 
     categories: [],
     modalOpen: false,
-    currentUser: 1
+    currentUser: null,
+    userName: null
   }
 
   componentDidMount() {
     this.getListings()
     this.getCategories()
+
+    const token = localStorage.getItem("token")
+    if (token) {
+      fetch(AUTOLOGIN_URL, {
+        method: 'GET',
+        headers: {'Authorization': token}
+      }).then(resp => resp.json())
+        .then(response => {
+          if (response.errors){
+            alert(response.errors)
+          } else {
+            this.setState({currentUser: response})
+          }
+        })
+    }
   }
 
   getListings = () => {
@@ -93,13 +109,49 @@ class App extends Component {
       modalOpen: !this.state.modalOpen
     })
   }
+
   handleLogin = (user) => {
-    console.log("TODO: handle login")
+    fetch(LOGIN_URL, {
+      method: "POST",
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({email: user.email, password: user.password})
+    })
+      .then(resp=>resp.json())
+      .then(response => {
+        if (response.error){
+          alert("Invalid Credentials")
+        } else {
+          console.log(response)
+          this.setState({currentUser: response.user},
+            () => {
+              localStorage.setItem("token", response.token)
+            }
+          )
+        }
+      })
+  }
+
+  handleLogout = () => {
+    this.setState({
+      currentUser: null
+    }, () => localStorage.removeItem("token"))
   }
 
   handleSignUp = (user) => {
-    debugger
-    console.log("TODO: handle signup")
+    fetch(SIGNUP_URL, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(user)
+    }).then(resp => resp.json())
+      .then(response => {
+        if (response.errors) {
+          response.errors.map(error => {
+            alert(error)
+          })
+        } else {
+          this.setState({currentUser: response.user}, () => localStorage.setItem("token", response.token))
+        }
+      })
   }
 
   render() {
@@ -110,12 +162,12 @@ class App extends Component {
           <Grid.Row>
             <Grid.Column width={4}>
 
-            <Navbar handleLogin={this.handleLogin} handleSignUp={this.handleSignUp} categories={this.state.categories} locations={this.getLocations()} categoriesClick={this.setCategory} listingClick={this.listingClick} saveListing={this.saveListing} setLocation={this.setLocation}/>
+            <Navbar currentUser={this.state.currentUser} handleLogin={this.handleLogin} handleSignUp={this.handleSignUp} categories={this.state.categories} locations={this.getLocations()} categoriesClick={this.setCategory} listingClick={this.listingClick} saveListing={this.saveListing} setLocation={this.setLocation} handleLogout={this.handleLogout}/>
 
             </Grid.Column>
             <Grid.Column width={12}>
               <SearchBar onSearch={this.onSearch} searchTerm={this.state.searchTerm} />
-              <Content listings={this.listings()} removeListing={this.removeListing}/>
+              <Content currentUser={this.state.currentUser} listings={this.listings()} removeListing={this.removeListing}/>
             </Grid.Column>
           </Grid.Row>
         </Grid>

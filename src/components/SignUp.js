@@ -4,7 +4,7 @@ import { Button, Message, Modal, Form, Label, Input } from 'semantic-ui-react'
 class SignUp extends React.Component {
 
     state = {
-        username: "",
+        name: "",
         email: "",
         password: "", 
         confirmPassword: "",
@@ -24,11 +24,11 @@ class SignUp extends React.Component {
     }
 
     handleSubmit = (_) => {
-        if (this.state.username && this.state.password && this.state.email && this.state.confirmPassword) {
+        if (this.state.name && this.state.password && this.state.email && this.state.confirmPassword) {
             if (this.state.password === this.state.confirmPassword) {
                 if (this.state.password.length > 6) {
                     this.props.signUpClick()
-                    this.props.handleSignUp({username: this.state.username, email: this.state.email, password: this.state.password})
+                    this.props.handleSignUp({name: this.state.name, email: this.state.email, password: this.state.password})
                 } else {
                     this.setError("Password must be 6 characters or longer")
                 }
@@ -58,8 +58,8 @@ class SignUp extends React.Component {
                     <Form onChange={this.handleFormChange} onSubmit={this.handleSubmit}>
 
                         <Form.Field>
-                            <Label>Username</Label>
-                            <Input name="username" value={this.state.username}></Input>
+                            <Label>Name</Label>
+                            <Input name="name" value={this.state.name}></Input>
                         </Form.Field>
 
                         <Form.Field>
